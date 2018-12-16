@@ -1,0 +1,57 @@
+---
+layout: post
+title: "Frolic"
+date: "2018-11-22 10:02:42 +0000"
+---
+* TOC
+{:toc}
+# Introduction
+* Name of Box : Frolic
+* IP Address : 10.10.10.111
+
+
+
+### Further Reading
+* SSH port forwarding : <https://www.ssh.com/ssh/tunneling/example>
+
+# NMAP
+First, scan for open ports
+
+{% highlight plaintext %}
+# Nmap 7.70 scan initiated Fri Nov  9 16:51:26 2018 as: nmap -p- -oA nmap/full 10.10.10.111
+Nmap scan report for 10.10.10.111
+Host is up (0.079s latency).
+Not shown: 65530 closed ports
+PORT     STATE SERVICE
+22/tcp   open  ssh
+139/tcp  open  netbios-ssn
+445/tcp  open  microsoft-ds
+1880/tcp open  vsat-control
+9999/tcp open  abyss
+
+# Nmap done at Fri Nov  9 17:00:36 2018 -- 1 IP address (1 host up) scanned in 549.27 seconds
+{% endhighlight plaintext %}
+
+Port 1880 points to a Node-Red website, which turned out to be a deadend
+
+Port 9999 gives us an nginx website. Let's break out GoBuster
+
+{% highlight plaintext %}
+=====================================================
+Gobuster v2.0.0              OJ Reeves (@TheColonial)
+=====================================================
+[+] Mode         : dir
+[+] Url/Domain   : http://10.10.10.111:9999/
+[+] Threads      : 10
+[+] Wordlist     : /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
+[+] Status codes : 200,204,301,302,307,403
+[+] Timeout      : 10s
+=====================================================
+2018/11/22 10:08:16 Starting gobuster
+=====================================================
+/admin (Status: 301)
+/test (Status: 301)
+/dev (Status: 301)
+/backup (Status: 301)
+/loop (Status: 301)
+{% endhighlight plaintext %}
