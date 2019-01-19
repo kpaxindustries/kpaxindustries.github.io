@@ -68,7 +68,7 @@ There is a register link. We try that and we can register a user, without an ema
 So we have an application where we can create notes and they are displayed back to us. Putting some control characters in the notes Subject and Body, doesn't yeild any SQL errors, so lets
 concentrate on the login name. As the notes are probably retrieve with some SQL similar to `SELECT * from Notes where username = 'whipped'`
 
-Let's see if we can inject something in there. Start with something simple. Register a user call `whipped' or 2>1 -- -` to see if we get an error from the SQL and can proceed from there.
+Let's see if we can inject something in there. Start with something simple. Register a user called `whipped' or 2>1 -- -` to see if we get an error from the SQL and can proceed from there.
 
 ![]({{ "assets/secnotes/3.png" | absolute_url }})
 
@@ -134,7 +134,7 @@ Create a file called rev.php with the following contents and upload it to the sh
 
 ![]({{ "assets/secnotes/4.png" | absolute_url }})
 
-We have command execution. But it dissappears after a while. It turns out there is a scheduled powershell script to remove anything that doesn't match `iisstart.*`. So we rename out command shell
+We have command execution. But it dissappears after a while. It turns out there is a scheduled powershell script to remove anything that doesn't match `iisstart.*`. So we rename our command shell
 to `iisstart.php` and it is persistant
 
 At this point we can try a reverse shell. I prefer Powershell reverse shells, to php.
